@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  redis:
+    build:
+      context: .
+      dockerfile: ./deploy/redis/Dockerfile
+    volumes:
+      - ./data/redis:/data
+      - ./deploy/redis/redis_master.conf:/usr/local/etc/redis/redis_master.conf
+    networks:
+      - node_redis
+    ports:
+      - 6379:6379
+#    command: ["redis-server", "/usr/local/etc/redis/redis_master.conf", "--bind", "redis", "--port", "6379"]
+#  redis_replica:
+#    build:
+#      context: .
+#      dockerfile: ./deploy/redis/Dockerfile
+#    volumes:
+#      - ./data/redis:/data
+#      - ./deploy/redis/redis_replica.conf:/usr/local/etc/redis/redis_replica.conf
+#    networks:
+#      - node_redis
+#    command: ["redis-server", "/usr/local/etc/redis/redis_replica.conf", "--bind", "redis_replica", "--port", "6380"]
+#  node:
+#    build:
+#      context: .
+#      dockerfile: ./deploy/node/Dockerfile
+#    networks:
+#      - node_redis
+#    depends_on:
+#      - redis
+
+networks:
+  node_redis:
